@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
+    "dev": "nodemon index.js",
     "commit": "git-cz",
     "prettier:check": "prettier --check 'src/**/*.{js,mdx}'",
     "validate": "run-s test lint prettier:check",

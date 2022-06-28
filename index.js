@@ -3,7 +3,8 @@ const https = require("https");
 const qs = require("querystring");
 const checksum_lib = require("./Paytm/checksum");
 const config = require("./Paytm/config");
-const cors = require('cors')
+const cors = require('cors');
+const { rawListeners } = require("process");
 
 const app = express();
 app.use(cors())
@@ -41,7 +42,8 @@ if(!paymentDetails.amount || !paymentDetails.customerId || !paymentDetails.custo
     params['CUST_ID'] = paymentDetails.customerId;
     params['TXN_AMOUNT'] = paymentDetails.amount;
     /* where is app is hosted (heroku url)*/
-    params['CALLBACK_URL'] = 'http://localhost:4100/callback';
+    // params['CALLBACK_URL'] = 'http://localhost:4100/callback';     // applicable when you run it locally
+    params['CALLBACK_URL'] = 'https://pay-with-paytm.herokuapp.com/callback';    // applicable when app runs live
     params['EMAIL'] = paymentDetails.customerEmail;
     params['MOBILE_NO'] = paymentDetails.customerPhone;
   
@@ -119,16 +121,41 @@ app.post("/callback", (req, res) => {
            console.log(">>>>>".response)
            var _results = JSON.parse(response);
            /* where it will come back after payment*/
-           res.redirect(`http://localhost:4100/viewBooking?status=${_results.STATUS}&ORDERID=${_results.ORDERID}&date=${_results.TXNDATE}&bank=${_results.BANKNAME}`)
+          //  res.redirect(`http://localhost:4100/viewBooking?status=${_results.STATUS}&ORDERID=${_results.ORDERID}&date=${_results.TXNDATE}&bank=${_results.BANKNAME}`)
+          
+          // custom: written by me (1)
+          // res.redirect(`http://localhost:4100/viewBooking?data=${response}`);  // applicable when you run it locally
+          res.redirect(`https://pay-with-paytm.herokuapp.com/viewBooking?data=${response}`);  // applicable when app runs live
            });
        });
-
+       
        // post the data
        post_req.write(post_data);
        post_req.end();
       });
      });
 });
+
+// custom: written by me (1)
+app.get("/viewBooking", (req, res) => {
+  res.send(req.query.data);
+})
+
+// custom: written by me (2)
+app.get("/viewBooking2", (req, res) => {
+  let status = req.query.status;
+  let orderId = req.query.ORDERID;
+  let date = req.query.date;
+  let bank = req.query.bank;
+
+  let data = [{
+    "Transaction Status" : status,
+    "Order Id          " : orderId,
+    "Transaction Date  " : date,
+    "Bank Name         " : bank
+  }];
+  res.send(data);
+})
 
 app.listen(PORT, () => {
   console.log(`App is listening on Port ${PORT}`);

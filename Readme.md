@@ -5,7 +5,7 @@
 
 >> Accept request at `http://localhost:4100/callback` (later update with live url (where application is hosted))
 
->> CallBack to `http://localhost:3000/viewBooking?status=${_results.STATUS}&ORDERID=${_results.ORDERID}&date=${_results.TXNDATE}&bank=${_results.BANKNAME}` (later update with live url where api is hosted : heroku)
+>> CallBack to `http://localhost:4100/viewBooking?status=${_results.STATUS}&ORDERID=${_results.ORDERID}&date=${_results.TXNDATE}&bank=${_results.BANKNAME}` (later update with live url where api is hosted : heroku)
 
 ## How To Use
 
