@@ -23,7 +23,8 @@ app.post("/paynow", [parseUrl, parseJson], (req, res) => {
   // Route for making payment
   console.log(">>>>",req.body)
   var paymentDetails = {
-    orderID: Math.random()*10000,
+    // orderID: Math.random()*10000,
+    orderID: req.body.id ? req.body.id : Math.random()*10000,
     amount: req.body.cost,
     customerId: req.body.name,
     customerEmail: req.body.email,
