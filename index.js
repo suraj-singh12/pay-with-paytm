@@ -65,7 +65,7 @@ if(!paymentDetails.amount || !paymentDetails.customerId || !paymentDetails.custo
 }
 });
 app.post("/callback", (req, res) => {
-  // Route for verifiying payment
+  // Route for verifying payment
 
   var body = '';
 
@@ -123,9 +123,12 @@ app.post("/callback", (req, res) => {
            /* where it will come back after payment*/
           //  res.redirect(`http://localhost:4100/viewBooking?status=${_results.STATUS}&ORDERID=${_results.ORDERID}&date=${_results.TXNDATE}&bank=${_results.BANKNAME}`)
           
-          // custom: written by me (1)
+          // custom: written by me (1): this will send information back to you (on this same api) after the payment is done
           // res.redirect(`http://localhost:4100/viewBooking?data=${response}`);  // applicable when you run it locally
-          res.redirect(`https://pay-with-paytm.herokuapp.com/viewBooking?data=${response}`);  // applicable when app runs live
+          // res.redirect(`https://pay-with-paytm.herokuapp.com/viewBooking?data=${response}`);  // applicable when app runs live
+
+          // redirect to my react app running at localhost:3000
+          res.redirect(`http://localhost:3000/viewBooking?status=${_results.STATUS}&ORDERID=${_results.ORDERID}&date=${_results.TXNDATE}&bank=${_results.BANKNAME}`);
            });
        });
        

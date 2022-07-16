@@ -19,6 +19,10 @@ git clone https://github.com/suraj-singh12/pay-with-paytm.git
 
 2. copy the keys and replace all the values in `config.js` file.
 
+> Documentation: https://business.paytm.com/docs/getting-started/
+
+> paytm-payment-gateway-api-documentation
+
 ### Install Dependencies
 ```npm
 npm install
@@ -28,7 +32,6 @@ npm install
 ```npm
 npm start
 ```
-> Go to localhost url and proceed after filling in 
-details.
+> Go to localhost url and proceed after filling in details.
 
 > You will receive the details of payment in the terminal window itself, and also on the redirect (last) page.
